@@ -38,7 +38,7 @@ RUN apt-get update -y && DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y 
         rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* /download/directory
 
 RUN apt-get update -y && DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y && apt-get clean && \
-	apt-get -y install \	
+	apt-get -y install \
 	python python-pip libgeoip-dev python-dev nginx-extras libfreetype6 libfontconfig1 \
 	build-essential zlib1g-dev libpcre3 libpcre3-dev unzip libssl-dev &&\
 	apt-get clean && \
@@ -56,7 +56,7 @@ RUN 	cd /usr/src &&\
 	cd /usr/src &&\
 	cd /usr/src && wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz &&\
 	cd /usr/src && tar -xvzf nginx-${NGINX_VERSION}.tar.gz &&\
-	cd /usr/src/nginx-${NGINX_VERSION}/ && ./configure --add-module=/usr/src/ngx_pagespeed-release-${NPS_VERSION}-beta \ 
+	cd /usr/src/nginx-${NGINX_VERSION}/ && ./configure --add-module=/usr/src/ngx_pagespeed-release-${NPS_VERSION}-beta \
          --prefix=/usr/local/share/nginx --conf-path=/etc/nginx/nginx.conf \
          --sbin-path=/usr/local/sbin --error-log-path=/var/log/nginx/error.log \
 	 --with-http_ssl_module --with-ipv6 --with-http_geoip_module && \
@@ -75,6 +75,12 @@ RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
 ADD /scripts /scripts
 ADD /config /config
+
+# install ionCube PHP loader for encrypted extensions
+RUN cd $(mktemp -d) && \
+wget http://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz && \
+tar zxvf ioncube_loaders_lin_x86-64.tar.gz && \
+mv ioncube /usr/local/
 
 RUN chmod 755 /scripts/*.sh && \
 cp /config/nginx/nginx.conf /etc/nginx/nginx.conf && \
