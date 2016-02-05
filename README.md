@@ -45,6 +45,15 @@ docker-compose ps
 192.168.59.103	  dockerhost mysql kmplzt.dev
 ```
 
+### using with ionCube extensions
+
+Some extensions require ionCube and this docker image has pre-installed ionCube module. But you need to set server_name in `/etc/ngnix/conf.d/sites-enabled/default` (inside the container) corresponding to allowed domain names. For example for allowed domains like `*.allow-site.dev` server_name can be like this:
+
+```sh
+# Make site accessible from http://docker.allow-site.dev/
+server_name docker.allow-site.dev;
+```
+
 ### On a Linux box, it will look like this:
 
 ```sh
