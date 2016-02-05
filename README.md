@@ -4,7 +4,7 @@ Docker NGINX + Magento container
 
 ## About
 
-This container is optimized for running Magento using NGINX and PHP-FPM
+This container is optimized for running Magento using NGINX and PHP-FPM, with enabled ionCube PHP loader for encrypted modules.
 
 ## Usage by example
 
